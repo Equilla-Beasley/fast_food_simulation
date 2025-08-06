@@ -1,3 +1,3 @@
-mod products;
-mod builders;
-mod register;
+//Goal: Have different sizes of Fries
+
+pub mod fries;
