@@ -1,19 +1,21 @@
 ///Logic for the creation of Fries
-#[derive(Debug, PartialEq)]
+use super::Food;
+
+#[derive(Debug, PartialEq, Hash, Eq, Copy, Clone)]
 pub enum FryKinds {
     Normal,
     Curly,
     Waffle,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Hash, Eq, Copy, Clone)]
 pub enum FrySizes {
     Small,
     Medium,
     Large,
 }
-#[derive(Debug, PartialEq)]
-pub struct Fries {
+#[derive(Debug, PartialEq, Hash, Eq, Copy, Clone)]
+pub struct Fries{
     kind: FryKinds,
     size: FrySizes,
 }
@@ -21,14 +23,17 @@ pub struct Fries {
 impl Fries {
     pub fn create(kind: FryKinds, size: FrySizes) -> Fries {
         Fries {
-            kind: kind,
-            size: size,
+            kind,
+            size,
         }
     }
 }
+impl Food for Fries {}
+
 #[cfg(test)]
 mod tests {
-    use crate::fries::{Fries, FryKinds, FrySizes};
+    use super::Food;
+    use super::{Fries, FryKinds, FrySizes};
 
     #[test]
     fn create_fries() {
