@@ -1,5 +1,4 @@
 ///Logic for the creation of Fries
-use super::Food;
 
 #[derive(Debug, PartialEq, Hash, Eq, Copy, Clone)]
 pub enum FryKinds {
@@ -13,6 +12,7 @@ pub enum FrySizes {
     Small,
     Medium,
     Large,
+    None,
 }
 #[derive(Debug, PartialEq, Hash, Eq, Copy, Clone)]
 pub struct Fries{
@@ -28,11 +28,9 @@ impl Fries {
         }
     }
 }
-impl Food for Fries {}
 
 #[cfg(test)]
 mod tests {
-    use super::Food;
     use super::{Fries, FryKinds, FrySizes};
 
     #[test]

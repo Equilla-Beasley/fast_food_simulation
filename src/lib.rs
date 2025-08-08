@@ -1,4 +1,4 @@
-//Goal: Update the inventory trait so that it works for all items with trait "Food"
-
+//Goal: Create a Builder Pattern for the creation of fries
 pub mod inventory;
 pub mod food;
+
