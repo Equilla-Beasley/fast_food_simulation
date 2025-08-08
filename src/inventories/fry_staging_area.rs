@@ -1,6 +1,6 @@
 ///Logic for the Staging Area for Fries
 use std::collections::HashMap;
-use crate::food::fries::Fries;
+use crate::foods::fries::Fries;
 use super::{Inventory, UpdateToggle};
 
 #[derive(Debug, PartialEq)]
@@ -36,7 +36,8 @@ impl Inventory for FryStagingArea{
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use crate::food::fries::{Fries, FryKinds, FrySizes};
+    use crate::foods::FoodStates;
+    use crate::foods::fries::{Fries, FryKinds, FrySizes};
     use super::{FryStagingArea, Inventory, UpdateToggle};
 
     #[test]
@@ -52,7 +53,7 @@ mod tests {
     #[test]
     fn update_inventory() {
         let mut inventory = FryStagingArea::initiate_inventory();
-        let normal_fries = Fries::create(FryKinds::Normal, FrySizes::None);
+        let normal_fries = Fries::create(FryKinds::Normal, FrySizes::None, FoodStates::Cooked);
         let normal_fries_2 = normal_fries.clone();
 
         inventory.update_inventory(normal_fries,100, UpdateToggle::Add);

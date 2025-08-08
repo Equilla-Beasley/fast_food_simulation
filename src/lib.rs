@@ -1,4 +1,4 @@
-//Goal: Create a Builder Pattern for the creation of fries
-pub mod inventory;
-pub mod food;
-
+pub mod inventories;
+pub mod foods;
+pub mod employees;
+pub mod menu;

@@ -39,8 +39,9 @@ impl Inventory for DeepFreezer{
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use crate::food::fries::{Fries, FryKinds, FrySizes};
-    use crate::inventory::FoodBags; //I don't know why I can't use super for this.
+    use crate::foods::FoodStates;
+    use crate::foods::fries::{Fries, FryKinds, FrySizes};
+    use crate::inventories::FoodBags; //I don't know why I can't use super for this.
     use super::{Inventory, UpdateToggle, DeepFreezer, FoodBoxes};
 
     #[test]
@@ -56,7 +57,7 @@ mod tests {
     #[test]
     fn update_inventory() {
         let mut inventory = DeepFreezer::initiate_inventory();
-        let normal_medium_fry = Fries::create(FryKinds::Normal, FrySizes::Medium);
+        let normal_medium_fry = Fries::create(FryKinds::Normal, FrySizes::Medium, FoodStates::Cooked);
 
         let fry_bag = FoodBags::BagOfFries(normal_medium_fry);
         let fry_bag_2 = FoodBags::BagOfFries(normal_medium_fry);

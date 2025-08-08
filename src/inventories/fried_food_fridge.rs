@@ -38,7 +38,8 @@ impl Inventory for FriedFoodFridge{
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use crate::food::fries::{Fries, FryKinds, FrySizes};
+    use crate::foods::FoodStates;
+    use crate::foods::fries::{Fries, FryKinds, FrySizes};
     use super::{FriedFoodFridge, Inventory, UpdateToggle, FoodBags};
 
     #[test]
@@ -54,7 +55,7 @@ mod tests {
     #[test]
     fn update_inventory() {
         let mut inventory = FriedFoodFridge::initiate_inventory();
-        let normal_medium_fry = Fries::create(FryKinds::Normal, FrySizes::Medium);
+        let normal_medium_fry = Fries::create(FryKinds::Normal, FrySizes::Medium, FoodStates::Cooked);
 
         let fry_bag = FoodBags::BagOfFries(normal_medium_fry);
         let fry_bag_2 = FoodBags::BagOfFries(normal_medium_fry);

@@ -3,7 +3,7 @@ pub mod deep_freezer;
 pub mod fried_food_fridge;
 pub mod fry_staging_area;
 
-use crate::food::fries::Fries;
+use crate::foods::fries::Fries;
 
 pub enum UpdateToggle {
     Add,
