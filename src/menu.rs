@@ -1,4 +1,5 @@
 ///Stores all Menu Items and the Recipes for them
+//TODO: Repurpose this Module to have menu items instead of acting as a director for the employees
 use crate::employees::fry_station::FryBuilder;
 use crate::foods::FoodStates;
 use crate::foods::fries::{FryKinds, FrySizes};

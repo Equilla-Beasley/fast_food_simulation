@@ -2,6 +2,7 @@
 use std::collections::HashMap;
 use super::{FoodBoxes, Inventory, UpdateToggle};
 
+const MAX_BOXES: u32 = 12;
 #[derive(Debug, PartialEq)]
 pub struct DeepFreezer {
     storage: HashMap<FoodBoxes,u32>,
@@ -18,17 +19,26 @@ impl Inventory for DeepFreezer{
         If the inventory doesn't have the chosen entry, the inputted amount is set to 8 (Max Number of Any Kind of Boxes).
         Otherwise, it will add or subtract the inputted amount from the current amount.
      */
-    fn update_inventory(&mut self, container: Self::Container, amount: u32, toggle: UpdateToggle) {
+    fn update_inventory(&mut self, container: Self::Container, amount: u32, toggle: UpdateToggle) -> Result<(),&str> {
+        match container {
+            FoodBoxes::BoxOfNormalFries(_) => {}
+            FoodBoxes::BoxOfCurlyFries(_) => {}
+            FoodBoxes::BoxOfWaffleFries(_) => {}
+            _ => return Err("Incorrect Food Box inputted into Deep Freezer"),
+        }
+        
         self.storage
-            .entry(match container {
-                FoodBoxes::BoxOfFries(_) => container,
-                _ => panic!("Incorrect Food Bag Inputted"),
-            })
+            .entry(container)
             .and_modify(|x| match toggle {
-                UpdateToggle::Add => *x += amount,
+                UpdateToggle::Add => {
+                    if *x + amount < MAX_BOXES {
+                        *x += amount
+                    }
+                },
                 UpdateToggle::Subtract => *x -= amount,
             })
-            .or_insert(8);
+            .or_insert(12);
+        Ok(())
     }
 
     fn check_stock(&mut self, container: &Self::Container) -> &u32 {
@@ -39,9 +49,6 @@ impl Inventory for DeepFreezer{
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
-    use crate::foods::FoodStates;
-    use crate::foods::fries::{Fries, FryKinds, FrySizes};
-    use crate::inventories::FoodBags; //I don't know why I can't use super for this.
     use super::{Inventory, UpdateToggle, DeepFreezer, FoodBoxes};
 
     #[test]
@@ -57,17 +64,13 @@ mod tests {
     #[test]
     fn update_inventory() {
         let mut inventory = DeepFreezer::initiate_inventory();
-        let normal_medium_fry = Fries::create(FryKinds::Normal, FrySizes::Medium, FoodStates::Cooked);
 
-        let fry_bag = FoodBags::BagOfFries(normal_medium_fry);
-        let fry_bag_2 = FoodBags::BagOfFries(normal_medium_fry);
+        let fry_box = FoodBoxes::box_of_normal_fries();
+        let fry_box_2 = fry_box.clone();
 
-        let fry_box = FoodBoxes::BoxOfFries(fry_bag);
-        let fry_box_2 = FoodBoxes::BoxOfFries(fry_bag_2);
-
-        inventory.update_inventory(fry_box,100, UpdateToggle::Add);
+        inventory.update_inventory(fry_box,100, UpdateToggle::Add).expect("Incorrect Food Box inputted into Deep Freezer");
         let amount = inventory.storage.get(&fry_box_2).unwrap();
 
-        assert_eq!(*amount, 8);
+        assert_eq!(*amount, 12);
     }
 }
